@@ -2,6 +2,7 @@ import express from 'express'
 import { categoriesController } from './controllers/categoryController'
 import { coursesController } from './controllers/courseController'
 import { episodesController } from './controllers/episodeController'
+import { favoritesController } from './controllers/favoritesController'
 import { authController } from './controllers/authController'
 import { ensureAuth, ensureAuthViaQuery } from './middlewares/auth'
 
@@ -19,6 +20,9 @@ router.get('/courses/newest', ensureAuth, coursesController.newest)
 router.get('/courses/search', ensureAuth, coursesController.search)
 router.get('/courses/:id', ensureAuth, coursesController.show)
 
+router.get('/favorites', ensureAuth, favoritesController.index)
+router.post('/favorites', ensureAuth, favoritesController.save)
+router.delete('/favorites', ensureAuth, favoritesController.delete)
 
 router.get('/episodes/stream', ensureAuthViaQuery, episodesController.stream)
 
