@@ -1,4 +1,5 @@
-import HeaderAuth from "@/components/headerAuth";
+import FeaturedSection from "@/components/homeAuth/featuredSection";
+import HeaderAuth from "@/components/homeAuth/headerAuth";
 import Head from "next/head";
 import { useEffect } from "react";
 
@@ -10,8 +11,7 @@ const HomeAuth = function () {
         <link rel="shortcut icon" href="/favicon.svg" type="image/x-icon" />
       </Head>
       <main>
-        <HeaderAuth/>
-        <p>Você está logado!</p>
+        <FeaturedSection/>
       </main>
     </>
   );
