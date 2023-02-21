@@ -6,8 +6,10 @@ import SlideSection from "@/components/homeNoAuth/slideSection";
 import courseService, { CourseType } from "@/services/courseService";
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import styles from "../styles/homeNoAuth.module.scss" 
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 interface IndexPageProps {
   children?: ReactNode;
@@ -15,6 +17,10 @@ interface IndexPageProps {
 }
 
 const HomeNotAuth = function ({ courses }: IndexPageProps) {
+  useEffect(() => {
+    AOS.init();
+  }, []);
+  
   return (
 		<>
 			<Head>
@@ -24,12 +30,16 @@ const HomeNotAuth = function ({ courses }: IndexPageProps) {
 				<meta name="description" content="Tenha acesso aos melhores conteúdos sobre programação de uma forma simples e fácil."/>
       </Head>
 			<main>
-				<div className={styles.sectionBackground}>
-					<HeaderNoAuth />
-					<PresentationSection />
-				</div>
-				<CardsSection />
-				<SlideSection newestCourses={courses}/>
+        <div className={styles.sectionBackground} data-aos="fade-zoom-in" data-aos-duration="1600">
+          <HeaderNoAuth />
+          <PresentationSection />
+        </div>
+        <div data-aos="fade-right" data-aos-duration="1200">
+          <CardsSection />
+        </div>
+        <div data-aos="fade-up" data-aos-duration="1350">
+          <SlideSection newestCourses={courses} />
+        </div>
         <Footer />
       </main>
 		</>
