@@ -9,25 +9,24 @@ export interface AuthenticatedRequest extends Request {
 }
 
 export function ensureAuth(req: AuthenticatedRequest, res: Response, next: NextFunction) {
-  next()
-  // const authorizationHeader = req.headers.authorization
+  const authorizationHeader = req.headers.authorization
 
-  // if (!authorizationHeader) {
-  //   return res.status(401).json({ message: 'Não autorizado: nenhum token encontrado' })
-  // }
+  if (!authorizationHeader) {
+    return res.status(401).json({ message: 'Não autorizado: nenhum token encontrado' })
+  }
 
-  // const token = authorizationHeader.replace(/Bearer /, '')
+  const token = authorizationHeader.replace(/Bearer /, '')
 
-  // jwtService.verifyToken(token, (err, decoded) => {
-  //   if (err || typeof decoded === 'undefined') {
-  //     return res.status(401).json({ message: 'Não autorizado: token inválido' })
-  //   }
+  jwtService.verifyToken(token, (err, decoded) => {
+    if (err || typeof decoded === 'undefined') {
+      return res.status(401).json({ message: 'Não autorizado: token inválido' })
+    }
 
-  //   userService.findByEmail((decoded as JwtPayload).email).then(user => {
-  //     req.user = user
-  //     next()
-  //   })
-  // })
+    userService.findByEmail((decoded as JwtPayload).email).then(user => {
+      req.user = user
+      next()
+    })
+  })
 }
 export function ensureAuthViaQuery(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const { token } = req.query
