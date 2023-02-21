@@ -13,16 +13,25 @@ const Login = function () {
   const [toastColor, setToastColor] = useState('');
   const [toastIsOpen, setToastIsOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
-  const registerSucess = router.query.registred;
+  const registerSuccess = router.query.registred;
+
+  
+  useEffect(() => {
+    if (sessionStorage.getItem("onebitflix-token")) {
+      router.push("/home");
+    }
+  }, []);
 
   useEffect(() => {
-    setToastColor("bg-success");
-    setToastIsOpen(true);
-    setTimeout(() => {
-      setToastIsOpen(false);
-    }, 1000 * 3);
-    setToastMessage("Cadastro feito com sucesso!");
-  }, [router.query]);
+    if (registerSuccess) {
+      setToastColor("bg-success");
+      setToastIsOpen(true);
+      setTimeout(() => {
+        setToastIsOpen(false);
+      }, 1000 * 3);
+      setToastMessage("Cadastro feito com sucesso!");
+    }
+  }, [registerSuccess]);
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

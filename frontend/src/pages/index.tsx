@@ -10,6 +10,7 @@ import { ReactNode, useEffect } from "react";
 import styles from "../styles/homeNoAuth.module.scss" 
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { useRouter } from "next/router";
 
 interface IndexPageProps {
   children?: ReactNode;
@@ -17,8 +18,15 @@ interface IndexPageProps {
 }
 
 const HomeNotAuth = function ({ courses }: IndexPageProps) {
+  const router = useRouter();
   useEffect(() => {
     AOS.init();
+  }, []);
+    
+  useEffect(() => {
+    if (sessionStorage.getItem("onebitflix-token")) {
+      router.push("/home");
+    }
   }, []);
   
   return (

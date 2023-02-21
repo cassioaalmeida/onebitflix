@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@types/aos": "^3.0.4",
+    "@types/react-modal": "^3.13.1",
     "sass": "^1.58.3"
   }
 }
