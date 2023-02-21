@@ -4,8 +4,50 @@ import Head from "next/head";
 import HeaderGeneric from "@/components/common/headerGeneric";
 import { Container, Form, FormGroup, Label, Input, Button } from "reactstrap";
 import Footer from "@/components/common/footer";
+import { FormEvent, useState } from "react";
+import authService from "@/services/authService";
+import { useRouter } from "next/router";
+import ToastComponent from "@/components/common/toast";
+
 
 const Register = function () {
+  const [toastIsOpen, setToastIsOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const router = useRouter();
+  
+  const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const firstName = formData.get("firstName")!.toString();
+    const lastName = formData.get("lastName")!.toString();
+    const phone = formData.get("phone")!.toString();
+    const birth = formData.get("birth")!.toString();
+    const email = formData.get("email")!.toString();
+    const password = formData.get("password")!.toString();
+    const confirmPassword = formData.get("confirmPassword")!.toString();
+    const params = { firstName, lastName, phone, birth, email, password };
+
+    if (password != confirmPassword) {
+      setToastIsOpen(true);
+      setTimeout(() => {
+        setToastIsOpen(false);
+      }, 1000 * 3);
+      setToastMessage("Senha e confirmação diferentes.");
+    
+      return;
+    }
+    const  resp = await authService.register(params);
+    if (resp.status === 201) {
+      router.push("/login?registred=true");
+    } else {
+      setToastIsOpen(true);
+      setTimeout(() => {
+        setToastIsOpen(false);
+      }, 1000 * 3);
+      setToastMessage(resp.data.message);
+    }
+  };
   return (
     <>
 			<Head>
@@ -14,10 +56,11 @@ const Register = function () {
         <script src="https://jsuites.net/v4/jsuites.js"></script>
       </Head>
       <main className={styles.main}>
+        <ToastComponent color="bg-danger" isOpen={toastIsOpen} message={toastMessage}/>
 	      <HeaderGeneric logoUrl="/" btnUrl="/login" btnContent="Quero fazer login"/>
         <Container className="py-5">
           <p className={styles.formTitle}>Bem-vindo(a) ao OneBitFlix!</p>
-            <Form className={styles.form}>
+            <Form className={styles.form}  onSubmit={handleRegister}>
               <p className="text-center"><strong>Bem-vindo(a) ao OneBitFlix!</strong> </p>
               <FormGroup>
                 <Label for="firstName" className={styles.label}>NOME</Label>
