@@ -36,7 +36,8 @@ export const userService = {
         'phone',
         'birth',
         'email',
-        'createdAt'
+        'createdAt',
+        'password'
       ],
       where: { email }
     })
