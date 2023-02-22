@@ -34,7 +34,7 @@ export const favoritesController = {
   // DELETE /favorites/:id
   delete: async (req: AuthenticatedRequest, res: Response) => {
     const userId = req.user!.id
-    const courseId = req.params.id
+    const courseId = req.body.courseId
 
     try {
       await favoriteService.delete(userId, Number(courseId))

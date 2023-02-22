@@ -93,6 +93,45 @@ const courseService = {
   
       return res;
   },
+  like: async (courseId: number | string) => {
+    const token = localStorage.getItem("onebitflix-token");
+  
+    const res = await api
+    .post(
+      "likes",
+      { courseId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .catch((error) => {
+      console.log(error.response.data.message);
+  
+      return error.response;
+    });
+  
+    return res;
+  },
+  removeLike: async (courseId: number | string) => {
+    const token = localStorage.getItem("onebitflix-token");
+  
+    const res = await api
+    .delete("/likes", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: { courseId },
+    })
+    .catch((error) => {
+      console.log(error.response.data.message);
+  
+      return error.response;
+    });
+  
+    return res;
+  },
   getSearch: async (name: string) => {
     const token = localStorage.getItem("onebitflix-token");
   
@@ -104,6 +143,23 @@ const courseService = {
     })
     .catch((error) => {
       console.log(error.response.data.messsage);
+  
+      return error.response;
+    });
+  
+    return res;
+  },
+  getEpisodes: async (id: number | string) => {
+    const token = localStorage.getItem("onebitflix-token");
+  
+    const res = await api
+    .get(`/courses/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    })
+    .catch((error) => {
+      console.log(error.response.data.message);
   
       return error.response;
     });
