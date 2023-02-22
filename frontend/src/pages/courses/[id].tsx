@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Container, Button } from "reactstrap";
 import EpisodeList from "@/components/episodeList";
 import Footer from "@/components/common/footer";
+import PageSpinner from "@/components/common/pageSpinner";
 
 const CoursePage = function () {
   const router = useRouter();
@@ -50,7 +51,19 @@ const CoursePage = function () {
   useEffect(() => {
     getCourse();
   }, [id]);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    if (!localStorage.getItem("onebitflix-token")) {
+      router.push("/login");
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  if (loading) {
+    return <PageSpinner />;
+  }
   return (
     <>
       <Head>

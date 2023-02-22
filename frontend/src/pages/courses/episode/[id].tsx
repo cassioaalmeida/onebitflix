@@ -33,6 +33,20 @@ const EpisodePlayer = function () {
   useEffect(() => {
     getCourse();
   }, [courseId]);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!localStorage.getItem("onebitflix-token")) {
+      router.push("/login");
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  if (loading) {
+    return <PageSpinner />;
+  }
   if (course?.episodes == undefined) return <PageSpinner />;
   return (
     <>
