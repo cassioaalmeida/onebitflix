@@ -16,7 +16,7 @@ const Register = function () {
   const router = useRouter();
     
   useEffect(() => {
-    if (sessionStorage.getItem("onebitflix-token")) {
+    if (localStorage.getItem("onebitflix-token")) {
       router.push("/home");
     }
   }, []);

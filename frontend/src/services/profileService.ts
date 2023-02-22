@@ -15,7 +15,7 @@ interface PasswordParams {
 
 const profileService = {
   fetchCurrent: async () => {
-    const token = sessionStorage.getItem("onebitflix-token");
+    const token = localStorage.getItem("onebitflix-token");
   
     const res = await api
       .get("/users/current", {
@@ -32,7 +32,7 @@ const profileService = {
     return res.data;
   },
   userUpdate: async (params: UserParams) => {
-    const token = sessionStorage.getItem("onebitflix-token");
+    const token = localStorage.getItem("onebitflix-token");
   
     const res = await api
     .put("/users/current", params, {
@@ -51,7 +51,7 @@ const profileService = {
     return res.status;
   },
   passwordUpdate: async (params: PasswordParams) => {
-    const token = sessionStorage.getItem("onebitflix-token");
+    const token = localStorage.getItem("onebitflix-token");
   
     const res = await api
     .put("/users/current/password", params, {

@@ -35,7 +35,7 @@ const authService = {
    });
    
     if (res.status === 200) {
-      sessionStorage.setItem("onebitflix-token", res.data.token);
+      localStorage.setItem("onebitflix-token", res.data.token);
     }
 
     return res;
